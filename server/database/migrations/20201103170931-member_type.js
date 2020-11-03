@@ -1,21 +1,12 @@
 module.exports = {
-  up: async (queryInterface, Sequelize) => queryInterface.createTable('members', {
+  up: async (queryInterface, Sequelize) => queryInterface.createTable('members_type', {
     id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
       autoIncrement: true,
       allowNull: false,
     },
-    member_type_id: {
-      type: Sequelize.INTEGER,
-      references: {
-        model: 'members_type',
-        key: 'id',
-      },
-    },
-    name: Sequelize.DataTypes.STRING,
-    email: Sequelize.DataTypes.STRING,
-    phone: Sequelize.DataTypes.STRING,
+    description: Sequelize.DataTypes.STRING,
     status: {
       type: Sequelize.DataTypes.ENUM({
         values: ['confirmed', 'pending', 'blocked'],
@@ -32,5 +23,5 @@ module.exports = {
     },
   }),
 
-  down: async queryInterface => queryInterface.dropTable('members'),
+  down: async queryInterface => queryInterface.dropTable('users'),
 };
