@@ -22,6 +22,20 @@ class AddressService {
       state,
     });
   }
+
+  update(id, memberId, street, number, neighborhood, city, state) {
+    return Address.update({
+      member_id: memberId,
+      street,
+      number,
+      neighborhood,
+      city,
+      state,
+    }, {
+      where: { id },
+      returning: true,
+    });
+  }
 }
 
 export default new AddressService();

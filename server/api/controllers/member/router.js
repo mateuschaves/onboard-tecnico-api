@@ -6,4 +6,5 @@ export default express
   .Router()
   .post('/', MemberValidator.postRules(), controller.create)
   .get('/', MemberValidator.getRules(), controller.all)
-  .get('/:id', controller.byId);
+  .get('/:id', controller.byId)
+  .put('/:id', MemberValidator.putRules(), controller.update);

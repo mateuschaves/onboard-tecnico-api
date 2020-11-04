@@ -23,11 +23,17 @@ class MemberService {
     });
   }
 
-  update(id, name, phone) {
+  update(id, name, phone, status, memberTypeId) {
     return Member.update(
-      { name, phone },
+      {
+        name,
+        phone,
+        status,
+        memberTypeId,
+      },
       {
         where: { id },
+        returning: true,
       },
     );
   }
