@@ -1,7 +1,5 @@
 import MemberService from '../../services/member.service';
-import AddressService from '../../services/address.service';
 import ValidationHelper from '../../helpers/validation.helper';
-import validationHelper from '../../helpers/validation.helper';
 
 export class MemberController {
   async all(request, response) {
@@ -17,6 +15,7 @@ export class MemberController {
       };
       return response.status(200).json(paginatedResponse);
     } catch (error) {
+      console.log(error);
       if (error.validation_failed) return response.status(400).json(error);
       return response.status(500).json(error);
     }
@@ -40,11 +39,6 @@ export class MemberController {
         email,
         status,
         memberTypeId,
-        street,
-        number,
-        city,
-        neighborhood,
-        state,
       } = request.body;
       const member = (await MemberService.create(
         name,
@@ -53,15 +47,7 @@ export class MemberController {
         status,
         memberTypeId,
       )).toJSON();
-      const address = (await AddressService.create(
-        member.id,
-        street,
-        number,
-        neighborhood,
-        city,
-        state,
-      )).toJSON();
-      return response.status(201).json({ ...member, address });
+      return response.status(201).json(member);
     } catch (error) {
       if (error.validation_failed) return response.status(400).json(error);
       return response.status(500).json(error);
@@ -89,7 +75,7 @@ export class MemberController {
 
   async destroy(request, response) {
     try {
-      await validationHelper.hasErrors(request);
+      await ValidationHelper.hasErrors(request);
       const { id } = request.params;
       await MemberService.destroy(id);
       return response.status(204).json();

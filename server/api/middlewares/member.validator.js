@@ -29,21 +29,6 @@ const postRules = () => [
         .catch(reject);
     }))
     .withMessage('Esse tipo de membro não existe'),
-  check('street')
-    .isString()
-    .withMessage('Informe a rua'),
-  check('number')
-    .isString()
-    .withMessage('Informe o número da casa'),
-  check('neighborhood')
-    .isString()
-    .withMessage('Informe o bairro'),
-  check('city')
-    .isString()
-    .withMessage('Informe a cidade'),
-  check('state')
-    .isString()
-    .withMessage('Informe o estado'),
 ];
 
 const putRules = () => [
@@ -120,5 +105,5 @@ export default {
   postRules,
   getRules,
   putRules,
-  deleteRules
+  deleteRules,
 };

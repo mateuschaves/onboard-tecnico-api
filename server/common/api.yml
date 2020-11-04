@@ -43,6 +43,16 @@ definitions:
       memberTypeId:
         type: number
         example: 1
+  AddressBody:
+     type: object
+     title: Address
+     required:
+      - street
+      - number
+      - neighborhood
+      - city
+      - state
+     properties:
       street:
         type: string
         example: Rua Ayres da Cunha
@@ -142,6 +152,7 @@ paths:
           description: Retorna o objeto do membro criado
         400:
           description: Objeto de membro inválido
+  /member/{id}:
     put:
       tags:
         - Member
@@ -152,6 +163,11 @@ paths:
           description: Membro que deseja atualizar
           schema:
             $ref: '#/definitions/UpdateMemberBody'
+        - name: id
+          in: path
+          description: ID do membro que deseja atualizar
+          type: integer
+          required: true
             
       responses:
         200:
@@ -163,14 +179,38 @@ paths:
         - Member
       description: Delete um membro já existente
       parameters:
-        - name: id
-          in: path
-          description: Id do membro que deseja deletar
+          - name: id
+            in: path
+            description: ID do membro que deseja deletar
+            type: integer
+            required: true
       responses:
         204:
           description: Retorna uma resposta sem conteúdo
         400:
           description: Id do membro inválido
+          
+  /member/{id}/address:
+    post:
+      tags:
+        - Address
+      description: Cria um novo endereço para um usuário já existente
+      parameters:
+        - name: Endereço
+          in: body
+          description: Endereço que deseja adicionar ao usuário
+          schema:
+            $ref: '#/definitions/AddressBody'
+        - name: id
+          in: path
+          description: ID do membro que deseja adicionar um novo endereço
+          type: integer
+          required: true
+      responses:
+        201:
+            description: Retorna o objeto do endereço criado
+        400:
+            description: Objeto de endereço inválido
   /member-type:
     get:
       tags:

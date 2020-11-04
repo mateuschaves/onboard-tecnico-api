@@ -27,6 +27,9 @@ class Member extends Model {
     this.belongsTo(models.MemberType, {
       foreignKey: 'member_type_id',
     });
+    this.hasMany(models.Address, {
+      as: 'adresses',
+    });
   }
 }
 
