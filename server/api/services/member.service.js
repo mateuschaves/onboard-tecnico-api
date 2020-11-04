@@ -42,7 +42,7 @@ class MemberService {
         name,
         phone,
         status,
-        memberTypeId,
+        member_type_id: memberTypeId,
       },
       {
         where: { id },
