@@ -4,12 +4,17 @@ import ValidationHelper from '../../helpers/validation.helper';
 
 export class MemberController {
   async all(request, response) {
-    const { page, limit } = request.query;
+    const { page = 1, limit = 20 } = request.query;
 
     try {
       await ValidationHelper.hasErrors(request);
       const members = await MemberService.all(page, limit);
-      return response.status(200).json(members);
+      const paginatedResponse = {
+        rows: members,
+        count: members.length,
+        page: Number(page),
+      };
+      return response.status(200).json(paginatedResponse);
     } catch (error) {
       if (error.validation_failed) return response.status(400).json(error);
       return response.status(500).json(error);
