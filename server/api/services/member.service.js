@@ -1,4 +1,4 @@
-import { Member } from '../models';
+import { Member, Address } from '../models';
 
 class MemberService {
   all(page, limit) {
@@ -6,6 +6,19 @@ class MemberService {
     return Member.findAll({
       offset,
       limit,
+      include: [{
+        model: Address,
+        as: 'adresses',
+        foreignKey: 'member_id',
+        attributes: [
+          'number',
+          'neighborhood',
+          'street',
+          'city',
+          'state',
+          'member_id',
+        ],
+      }],
     });
   }
 
