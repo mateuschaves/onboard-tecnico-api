@@ -267,6 +267,21 @@ paths:
           description: Retorna o objeto de tipo de membro atualizado
         400:
           description: Objeto de tipo de membro inválido
+    delete:
+      tags:
+        - MemberType
+      description: Deleta um tipo de membro já existente
+      parameters:
+        - name: id
+          in: path
+          description: ID de tipo de membro que deseja deletar
+          type: integer
+          required: true
+      responses:
+        204:
+          description: Rertorna uma resposta sem conteúdo
+        400:
+          description: ID do de tipo de membro inválido
 
 
 
