@@ -9,6 +9,8 @@ tags:
     description: Simple example endpoints
   - name: Specification
     description: The swagger API specification
+  - name: Member
+    description: Simple member endpoints
 
 consumes:
   - application/json
@@ -26,6 +28,37 @@ definitions:
       name:
         type: string
         example: no_stress
+  MemberBody:
+    type: object
+    title: member
+    required:
+      - name
+      - email
+    properties:
+      name:
+        type: string
+        example: Mateus Henrique
+      phone:
+        type: string
+        example: (81) 973248345
+      email:
+        type: string
+        example: mateus.morais@maxxidata.com
+      street:
+        type: string
+        example: Rua Ayres da Cunha
+      number:
+        type: string
+        example: 96
+      neighborhood:
+        type: string
+        example: Mauricio de Nassau
+      city:
+        type: string
+        example: Caruaru
+      state:
+        type: string
+        example: Pernambuco
 
 paths:
   /examples:
@@ -74,3 +107,90 @@ paths:
       responses:
         200:
           description: Return the API specification
+
+
+  /member:
+    get:
+      tags:
+        - Member
+      description: Lista todos os membros
+      responses:
+        200:
+          description: Lista todos os membros
+    post:
+      tags:
+        - Member
+      description: Cria um novo membro
+      parameters:
+        - name: name
+          in: body
+          description: Nome do membro
+          required: true
+          schema: 
+            $ref: "#/definitions/MemberBody"
+
+        - email: email
+          in: body
+          description: Email do membro
+          required: true
+          schema: 
+            $ref: "#/definitions/MemberBody"
+
+        - phone: phone
+          in: body
+          description: Telefone do membro
+          schema: 
+            $ref: "#/definitions/MemberBody"
+
+        - street: street
+          in: body
+          description: Nome da rua do membro
+          schema: 
+            $ref: "#/definitions/MemberBody"
+
+        - number: number
+          in: body
+          description: Número da casa / apartamento do membro
+          schema: 
+            $ref: "#/definitions/MemberBody"
+
+        - neigborhood: neigborhood
+          in: body
+          description: Nome do bairro do membro
+          schema: 
+            $ref: "#/definitions/MemberBody"
+
+        - city: city
+          in: body
+          description: Cidade do membro
+          schema: 
+            $ref: "#/definitions/MemberBody"
+
+        - state: state
+          in: body
+          description: Estado do membro
+          schema: 
+            $ref: "#/definitions/MemberBody"
+            
+      responses:
+        201:
+          description: Retorna o objeto do membro criado
+
+  /member/{id}:
+    get:
+      tags:
+        - Examples
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the example to retrieve
+          type: integer
+      responses:
+        200:
+          description: Return the example with the specified id
+        404:
+          description: Example not found
+
+
+  

@@ -1,12 +1,9 @@
-FROM node:12-alpine
-LABEL Author Carmine DiMascio <cdimascio@gmail.com>
+FROM node:alpine
 
-RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
-COPY . /usr/src/app
+COPY package*.json ./
+
 RUN npm install
 
-EXPOSE 3000
-
-CMD [ "npm", "start" ]
+COPY . .
