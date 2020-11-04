@@ -19,15 +19,6 @@ produces:
 
 
 definitions:
-  ExampleBody:
-    type: object
-    title: example
-    required:
-      - name
-    properties:
-      name:
-        type: string
-        example: no_stress
   MemberBody:
     type: object
     title: Member
@@ -35,6 +26,7 @@ definitions:
       - name
       - email
       - status
+      - memberTypeId
     properties:
       name:
         type: string
@@ -48,6 +40,9 @@ definitions:
       status:
         type: string
         example: pending
+      memberTypeId:
+        type: number
+        example: 1
       street:
         type: string
         example: Rua Ayres da Cunha
@@ -63,6 +58,26 @@ definitions:
       state:
         type: string
         example: Pernambuco
+  UpdateMemberBody:
+    type: object
+    title: Member
+    required:
+      - name
+      - status
+      - memberTypeId
+    properties:
+      name:
+        type: string
+        example: Mateus Henrique
+      phone:
+        type: string
+        example: (81) 973248345
+      memberTypeId:
+        type: number
+        example: 1
+      status:
+        type: string
+        example: pending
   MemberTypeBody:
     type: object
     title: Member type
@@ -123,7 +138,21 @@ paths:
           description: Retorna o objeto do membro criado
         400:
           description: Objeto de membro inválido
-
+    put:
+      tags:
+        - Member
+      description: Atualiza um membro já existente
+      parameters:
+        - name: Membro
+          in: body
+          description: Membro que deseja atualizar
+          schema:
+            $ref: '#/definitions/UpdateMemberBody'
+      responses:
+        200:
+          description: Retorna o objeto do membro atualizado
+        400:
+          description: Objeto de membro inválido
   /member-type:
     get:
       tags:
