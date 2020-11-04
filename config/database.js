@@ -6,6 +6,7 @@ module.exports = {
   database: process.env.DB_NAME,
   storage: './__tests__/database.sqlite',
   define: {
+    paranoid: true,
     timestamps: true,
     underscored: true,
     underscoredAll: true,

@@ -10,6 +10,7 @@ class MemberType extends Model {
     }, {
       sequelize,
       tableName: 'member_types',
+      deletedAt: 'deleted_at',
       createdAt: 'created_at',
       updatedAt: 'updated_at',
       underscored: true,

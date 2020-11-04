@@ -14,6 +14,7 @@ class Address extends Model {
     }, {
       sequelize,
       tableName: 'adresses',
+      deletedAt: 'deleted_at',
       createdAt: 'created_at',
       updatedAt: 'updated_at',
       underscored: true,

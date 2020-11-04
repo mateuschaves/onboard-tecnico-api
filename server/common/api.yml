@@ -58,6 +58,10 @@ definitions:
       state:
         type: string
         example: Pernambuco
+  UpdateMemberPath:
+    type: string
+    title:  id
+    example: 1
   UpdateMemberBody:
     type: object
     title: Member
@@ -148,11 +152,25 @@ paths:
           description: Membro que deseja atualizar
           schema:
             $ref: '#/definitions/UpdateMemberBody'
+            
       responses:
         200:
           description: Retorna o objeto do membro atualizado
         400:
           description: Objeto de membro inválido
+    delete:
+      tags: 
+        - Member
+      description: Delete um membro já existente
+      parameters:
+        - name: id
+          in: path
+          description: Id do membro que deseja deletar
+      responses:
+        204:
+          description: Retorna uma resposta sem conteúdo
+        400:
+          description: Id do membro inválido
   /member-type:
     get:
       tags:

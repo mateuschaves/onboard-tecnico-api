@@ -7,4 +7,5 @@ export default express
   .post('/', MemberValidator.postRules(), controller.create)
   .get('/', MemberValidator.getRules(), controller.all)
   .get('/:id', controller.byId)
-  .put('/:id', MemberValidator.putRules(), controller.update);
+  .put('/:id', MemberValidator.putRules(), controller.update)
+  .delete('/:id', MemberValidator.deleteRules(), controller.destroy);

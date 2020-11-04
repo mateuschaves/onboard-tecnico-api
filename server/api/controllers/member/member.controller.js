@@ -1,6 +1,7 @@
 import MemberService from '../../services/member.service';
 import AddressService from '../../services/address.service';
 import ValidationHelper from '../../helpers/validation.helper';
+import validationHelper from '../../helpers/validation.helper';
 
 export class MemberController {
   async all(request, response) {
@@ -80,6 +81,18 @@ export class MemberController {
 
       const [, [rowsAffected]] = await MemberService.update(id, name, phone, status, memberTypeId);
       return response.status(200).json(rowsAffected);
+    } catch (error) {
+      if (error.validation_failed) return response.status(400).json(error);
+      return response.status(500).json(error);
+    }
+  }
+
+  async destroy(request, response) {
+    try {
+      await validationHelper.hasErrors(request);
+      const { id } = request.params;
+      await MemberService.destroy(id);
+      return response.status(204).json();
     } catch (error) {
       if (error.validation_failed) return response.status(400).json(error);
       return response.status(500).json(error);
