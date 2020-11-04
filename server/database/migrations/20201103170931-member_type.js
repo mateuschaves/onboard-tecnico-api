@@ -1,5 +1,5 @@
 module.exports = {
-  up: async (queryInterface, Sequelize) => queryInterface.createTable('members_type', {
+  up: async (queryInterface, Sequelize) => queryInterface.createTable('member_types', {
     id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
@@ -7,12 +7,7 @@ module.exports = {
       allowNull: false,
     },
     description: Sequelize.DataTypes.STRING,
-    status: {
-      type: Sequelize.DataTypes.ENUM({
-        values: ['confirmed', 'pending', 'blocked'],
-      }),
-      defaultValue: 'pending',
-    },
+    status: Sequelize.DataTypes.STRING,
     created_at: {
       type: Sequelize.DataTypes.DATE,
       defaultValue: Sequelize.NOW,

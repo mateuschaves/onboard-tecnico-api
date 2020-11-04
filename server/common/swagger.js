@@ -40,13 +40,13 @@ export default function swagger(app, routes) {
       // These two middleware don't have any options (yet)
       app.use(
         mw.CORS(),
-        mw.validateRequest(),
+        // mw.validateRequest(),
       );
 
       routes(app);
 
       // eslint-disable-next-line no-unused-vars, no-shadow
-      app.use(errorHandler);
+      // app.use(errorHandler);
       return resolve();
     });
   });

@@ -13,7 +13,6 @@ class AddressService {
   }
 
   create(memberId, street, number, neighborhood, city, state) {
-    console.log(neighborhood);
     return Address.create({
       member_id: memberId,
       street,

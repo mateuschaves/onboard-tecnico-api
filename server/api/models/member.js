@@ -9,6 +9,7 @@ class Member extends Model {
       status: Sequelize.ENUM({
         values: ['confirmed', 'pending', 'blocked'],
       }),
+      member_type_id: Sequelize.INTEGER,
       created_at: Sequelize.DATE,
       updated_at: Sequelize.DATE,
     }, {
@@ -19,6 +20,12 @@ class Member extends Model {
     });
 
     return this;
+  }
+
+  static associate(models) {
+    this.belongsTo(models.MemberType, {
+      foreignKey: 'member_type_id',
+    });
   }
 }
 

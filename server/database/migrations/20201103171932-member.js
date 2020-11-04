@@ -9,19 +9,14 @@ module.exports = {
     member_type_id: {
       type: Sequelize.INTEGER,
       references: {
-        model: 'members_type',
+        model: 'member_types',
         key: 'id',
       },
     },
     name: Sequelize.DataTypes.STRING,
     email: Sequelize.DataTypes.STRING,
     phone: Sequelize.DataTypes.STRING,
-    status: {
-      type: Sequelize.DataTypes.ENUM({
-        values: ['confirmed', 'pending', 'blocked'],
-      }),
-      defaultValue: 'pending',
-    },
+    status: Sequelize.DataTypes.STRING,
     created_at: {
       type: Sequelize.DataTypes.DATE,
       defaultValue: Sequelize.NOW,
