@@ -5,5 +5,5 @@ import MemberValidator from '../../middlewares/member.validator';
 export default express
   .Router()
   .post('/', MemberValidator.postRules(), controller.create)
-  .get('/', controller.all)
+  .get('/', MemberValidator.getRules(), controller.all)
   .get('/:id', controller.byId);
