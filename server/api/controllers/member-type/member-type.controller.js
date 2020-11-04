@@ -47,5 +47,17 @@ export class MemberTypeController {
       return response.status(500).json(error);
     }
   }
+
+  async destroy(request, response) {
+    try {
+      await ValidationHelper.hasErrors(request);
+      const { id } = request.params;
+      await MemberTypeService.destory(id);
+      return response.status(204).json();
+    } catch (error) {
+      if (error.validation_failed) return response.status(400).json(error);
+      return response.status(500).json(error);
+    }
+  }
 }
 export default new MemberTypeController();

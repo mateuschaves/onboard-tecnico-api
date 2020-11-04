@@ -6,9 +6,7 @@ class Member extends Model {
       name: Sequelize.STRING,
       email: Sequelize.STRING,
       phone: Sequelize.STRING,
-      status: Sequelize.ENUM({
-        values: ['confirmed', 'pending', 'blocked'],
-      }),
+      status: Sequelize.STRING,
       member_type_id: Sequelize.INTEGER,
       created_at: Sequelize.DATE,
       updated_at: Sequelize.DATE,

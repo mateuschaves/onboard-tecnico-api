@@ -4,12 +4,14 @@ import MemberTypeService from '../services/member-type.service';
 const postRules = () => [
   check('description')
     .exists()
+    .not()
     .isEmpty()
     .withMessage('Informe a descrição do tipo de membro')
     .isString()
     .withMessage('A descrição precisa ser um texto'),
   check('status')
     .exists()
+    .not()
     .isEmpty()
     .withMessage('Informe o status do tipo de membro')
     .isString()
@@ -63,4 +65,22 @@ const putRules = () => [
     .withMessage('O status precisa ser um texto'),
 ];
 
-export default { postRules, getRules, putRules };
+const deleteRules = () => [
+  check('id')
+    .exists()
+    .withMessage('Informe o ID do tipo de membro que deseja deletar')
+    .isNumeric({
+      no_symbols: true,
+    })
+    .withMessage('Informe corretamente o ID do tipo de membro que deseja deletar')
+    .custom(memberTypeId => new Promise((resolve, reject) => {
+      MemberTypeService.byId(memberTypeId)
+        .then(memberType => {
+          if (memberType) resolve(true);
+          else reject(memberType);
+        });
+    }))
+    .withMessage('O tipo de membro informado não existe'),
+];
+
+export default { postRules, getRules, putRules, deleteRules };

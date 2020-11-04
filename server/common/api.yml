@@ -240,11 +240,6 @@ paths:
           description: Tipo de membro que deseja adicionar
           schema:
             $ref: '#/definitions/MemberTypeBody'
-        - name: id
-          in: path
-          description: ID do tipo de membro que deseja atualizar
-          type: integer
-          required: true
       responses:
         201:
           description: Retorna o objeto de tipo de membro criado
@@ -262,6 +257,11 @@ paths:
           description: Tipo de membro que deseja atualizar
           schema:
             $ref: '#/definitions/MemberTypeBody'
+        - name: id
+          in: path
+          description: ID do tipo de membro que deseja atualizar
+          type: integer
+          required: true
       responses:
         200:
           description: Retorna o objeto de tipo de membro atualizado
