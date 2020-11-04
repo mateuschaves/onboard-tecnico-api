@@ -32,13 +32,21 @@ export class MemberController {
         name,
         phone,
         email,
+        status,
+        memberTypeId,
         street,
         number,
         city,
         neighborhood,
         state,
       } = request.body;
-      const member = (await MemberService.create(name, phone, email)).toJSON();
+      const member = (await MemberService.create(
+        name,
+        phone,
+        email,
+        status,
+        memberTypeId,
+      )).toJSON();
       const address = (await AddressService.create(
         member.id,
         street,

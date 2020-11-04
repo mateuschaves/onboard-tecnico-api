@@ -13,11 +13,13 @@ class MemberService {
     return Member.findByPk(id);
   }
 
-  create(name, phone, email) {
+  create(name, phone, email, status, memberTypeId) {
     return Member.create({
       name,
       phone,
       email,
+      status,
+      member_type_id: memberTypeId,
     });
   }
 

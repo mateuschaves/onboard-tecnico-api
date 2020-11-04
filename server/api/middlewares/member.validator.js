@@ -1,4 +1,5 @@
 import { check } from 'express-validator';
+import MemberTypeService from '../services/member-type.service';
 
 const postRules = () => [
   check('name')
@@ -12,15 +13,28 @@ const postRules = () => [
     .isEmail()
     .withMessage('Informe o email corretamente'),
   check('phone')
-    .isAlphanumeric()
+    .isString()
     .withMessage('Informe o telefone corretamente'),
+  check('status')
+    .exists()
+    .withMessage('Informe o status corretamente'),
+  check('memberTypeId')
+    .custom(memberTypeId => new Promise((resolve, reject) => {
+      MemberTypeService.byId(memberTypeId)
+        .then(memberType => {
+          if (memberType) resolve(true);
+          reject(memberType);
+        })
+        .catch(reject);
+    }))
+    .withMessage('Esse tipo de membro não existe'),
   check('street')
     .isString()
     .withMessage('Informe a rua'),
   check('number')
     .isString()
     .withMessage('Informe o número da casa'),
-  check('neigborhood')
+  check('neighborhood')
     .isString()
     .withMessage('Informe o bairro'),
   check('city')
