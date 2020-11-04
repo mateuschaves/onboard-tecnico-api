@@ -19,6 +19,19 @@ class MemberTypeService {
       status,
     });
   }
+
+  update(id, description, status) {
+    return MemberType.update(
+      {
+        description,
+        status,
+      },
+      {
+        where: { id },
+        returning: true,
+      },
+    );
+  }
 }
 
 export default new MemberTypeService();

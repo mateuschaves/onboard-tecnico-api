@@ -1,13 +1,16 @@
 import { check } from 'express-validator';
+import MemberTypeService from '../services/member-type.service';
 
 const postRules = () => [
   check('description')
     .exists()
+    .isEmpty()
     .withMessage('Informe a descrição do tipo de membro')
     .isString()
     .withMessage('A descrição precisa ser um texto'),
   check('status')
     .exists()
+    .isEmpty()
     .withMessage('Informe o status do tipo de membro')
     .isString()
     .withMessage('O status precisa ser um texto'),
@@ -28,4 +31,36 @@ const getRules = () => [
     .withMessage('O número de itens por página precisa ser um número'),
 ];
 
-export default { postRules, getRules };
+const putRules = () => [
+  check('id')
+    .exists()
+    .withMessage('Informe o ID do tipo de membro que deseja deletar')
+    .isNumeric({
+      no_symbols: true,
+    })
+    .withMessage('Informe corretamente o ID do tipo de membro que deseja deletar')
+    .custom(memberTypeId => new Promise((resolve, reject) => {
+      MemberTypeService.byId(memberTypeId)
+        .then(memberType => {
+          if (memberType) resolve(true);
+          else reject(memberType);
+        });
+    }))
+    .withMessage('O tipo de membro informado não existe'),
+  check('description')
+    .exists()
+    .not()
+    .isEmpty()
+    .withMessage('Informe a descrição do tipo de membro')
+    .isString()
+    .withMessage('A descrição precisa ser um texto'),
+  check('status')
+    .exists()
+    .not()
+    .isEmpty()
+    .withMessage('Informe o status do tipo de membro')
+    .isString()
+    .withMessage('O status precisa ser um texto'),
+];
+
+export default { postRules, getRules, putRules };
