@@ -105,7 +105,6 @@ definitions:
       status:
         type: string
         example: pending
-  
 
 paths:
   /spec:
@@ -241,9 +240,31 @@ paths:
           description: Tipo de membro que deseja adicionar
           schema:
             $ref: '#/definitions/MemberTypeBody'
+        - name: id
+          in: path
+          description: ID do tipo de membro que deseja atualizar
+          type: integer
+          required: true
       responses:
         201:
-          description: Retorna o objedo de tipo de membro criado
+          description: Retorna o objeto de tipo de membro criado
+        400:
+          description: Objeto de tipo de membro inválido
+
+  /member-type/{id}:
+    put:
+      tags:
+        - MemberType
+      description: Atualiza um tipo de membro já existente
+      parameters:
+        - name: Tipo de membro
+          in: body
+          description: Tipo de membro que deseja atualizar
+          schema:
+            $ref: '#/definitions/MemberTypeBody'
+      responses:
+        200:
+          description: Retorna o objeto de tipo de membro atualizado
         400:
           description: Objeto de tipo de membro inválido
 

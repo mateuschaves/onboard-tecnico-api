@@ -30,5 +30,22 @@ export class MemberTypeController {
       return response.status(500).json(error);
     }
   }
+
+  async update(request, response) {
+    try {
+      await ValidationHelper.hasErrors(request);
+      const {
+        description,
+        status,
+      } = request.body;
+      const { id } = request.params;
+
+      const [, [rowsAffected]] = await MemberTypeService.update(id, description, status);
+      return response.status(200).json(rowsAffected);
+    } catch (error) {
+      if (error.validation_failed) return response.status(400).json(error);
+      return response.status(500).json(error);
+    }
+  }
 }
 export default new MemberTypeController();
