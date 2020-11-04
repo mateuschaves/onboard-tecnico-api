@@ -5,12 +5,12 @@ info:
   description: oboard-api
 basePath: /api/v1
 tags:
-  - name: Examples
-    description: Simple example endpoints
   - name: Specification
     description: The swagger API specification
   - name: Member
     description: Simple member endpoints
+  - name: Member type
+    description: Tipo de membros
 
 consumes:
   - application/json
@@ -30,10 +30,11 @@ definitions:
         example: no_stress
   MemberBody:
     type: object
-    title: member
+    title: Member
     required:
       - name
       - email
+      - status
     properties:
       name:
         type: string
@@ -44,6 +45,9 @@ definitions:
       email:
         type: string
         example: mateus.morais@maxxidata.com
+      status:
+        type: string
+        example: pending
       street:
         type: string
         example: Rua Ayres da Cunha
@@ -59,47 +63,22 @@ definitions:
       state:
         type: string
         example: Pernambuco
+  MemberTypeBody:
+    type: object
+    title: Member type
+    required:
+      - description
+      - status
+    properties:
+      description:
+        type: string
+        example: Administradores
+      status:
+        type: string
+        example: pending
+  
 
 paths:
-  /examples:
-    get:
-      tags:
-        - Examples
-      description: Fetch all examples
-      responses:
-        200:
-          description: Returns all examples
-    post:
-      tags:
-        - Examples
-      description: Create a new example
-      parameters:
-        - name: example
-          in: body
-          description: an example
-          required: true
-          schema: 
-            $ref: "#/definitions/ExampleBody"
-      responses:
-        200:
-          description: Returns all examples
-
-  /examples/{id}:
-    get:
-      tags:
-        - Examples
-      parameters:
-        - name: id
-          in: path
-          required: true
-          description: The id of the example to retrieve
-          type: integer
-      responses:
-        200:
-          description: Return the example with the specified id
-        404:
-          description: Example not found
-
   /spec:
     get:
       tags:
@@ -114,6 +93,18 @@ paths:
       tags:
         - Member
       description: Lista todos os membros
+      parameters:
+        - in: query
+          name: page
+          description: Número da página que deseja acessar
+          required: false
+          default: 1
+          type: number
+        - in: query
+          name: limit 
+          description: Número de itens por página
+          default: 20 
+          type: number
       responses:
         200:
           description: Lista todos os membros
@@ -122,75 +113,53 @@ paths:
         - Member
       description: Cria um novo membro
       parameters:
-        - name: name
+        - name: Membro
           in: body
-          description: Nome do membro
-          required: true
+          description: Membro que deseja adicionar
           schema: 
             $ref: "#/definitions/MemberBody"
-
-        - email: email
-          in: body
-          description: Email do membro
-          required: true
-          schema: 
-            $ref: "#/definitions/MemberBody"
-
-        - phone: phone
-          in: body
-          description: Telefone do membro
-          schema: 
-            $ref: "#/definitions/MemberBody"
-
-        - street: street
-          in: body
-          description: Nome da rua do membro
-          schema: 
-            $ref: "#/definitions/MemberBody"
-
-        - number: number
-          in: body
-          description: Número da casa / apartamento do membro
-          schema: 
-            $ref: "#/definitions/MemberBody"
-
-        - neigborhood: neigborhood
-          in: body
-          description: Nome do bairro do membro
-          schema: 
-            $ref: "#/definitions/MemberBody"
-
-        - city: city
-          in: body
-          description: Cidade do membro
-          schema: 
-            $ref: "#/definitions/MemberBody"
-
-        - state: state
-          in: body
-          description: Estado do membro
-          schema: 
-            $ref: "#/definitions/MemberBody"
-            
       responses:
         201:
           description: Retorna o objeto do membro criado
+        400:
+          description: Objeto de membro inválido
 
-  /member/{id}:
+  /member-type:
     get:
       tags:
-        - Examples
+        - MemberType
+      description: Lista todos os tipos de membros
       parameters:
-        - name: id
-          in: path
-          required: true
-          description: The id of the example to retrieve
-          type: integer
+        - in: query
+          name: page
+          description: Número da página que deseja acessar
+          required: false
+          default: 1
+          type: number
+        - in: query
+          name: limit 
+          description: Número de itens por página
+          default: 20 
+          type: number
       responses:
         200:
-          description: Return the example with the specified id
-        404:
-          description: Example not found
+          description: Lista todos os tipos de membros
+    post: 
+      tags: 
+        - MemberType
+      description: Cria um novo tipo de membro
+      parameters:
+        - name: Tipo de membro
+          in: body
+          description: Tipo de membro que deseja adicionar
+          schema:
+            $ref: '#/definitions/MemberTypeBody'
+      responses:
+        201:
+          description: Retorna o objedo de tipo de membro criado
+        400:
+          description: Objeto de tipo de membro inválido
+
 
 
   
