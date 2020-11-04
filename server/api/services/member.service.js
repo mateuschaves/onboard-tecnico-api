@@ -1,7 +1,7 @@
 import { Member } from '../models';
 
 class MemberService {
-  all(page = 1, limit = 20) {
+  all(page, limit) {
     const offset = 0 + (page - 1) * limit;
     return Member.findAll({
       offset,
