@@ -13,4 +13,19 @@ const postRules = () => [
     .withMessage('O status precisa ser um texto'),
 ];
 
-export default { postRules };
+const getRules = () => [
+  check('page')
+    .optional({
+      nullable: true,
+    })
+    .isNumeric()
+    .withMessage('O número da página precisa ser um número'),
+  check('limit')
+    .optional({
+      nullable: true,
+    })
+    .isNumeric()
+    .withMessage('O número de itens por página precisa ser um número'),
+];
+
+export default { postRules, getRules };
