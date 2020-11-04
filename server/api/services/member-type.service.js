@@ -1,5 +1,4 @@
 import { MemberType } from '../models';
-
 class MemberTypeService {
   all(page, limit) {
     const offset = 0 + (page - 1) * limit;
@@ -31,6 +30,12 @@ class MemberTypeService {
         returning: true,
       },
     );
+  }
+
+  destory(id) {
+    return MemberType.destroy({
+      where: { id },
+    });
   }
 }
 
