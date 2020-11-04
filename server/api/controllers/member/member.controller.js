@@ -15,7 +15,6 @@ export class MemberController {
       };
       return response.status(200).json(paginatedResponse);
     } catch (error) {
-      console.log(error);
       if (error.validation_failed) return response.status(400).json(error);
       return response.status(500).json(error);
     }
