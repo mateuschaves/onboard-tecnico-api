@@ -45,4 +45,19 @@ const postRules = () => [
     .withMessage('Informe o estado'),
 ];
 
-export default { postRules };
+const getRules = () => [
+  check('page')
+    .optional({
+      nullable: true,
+    })
+    .isNumeric()
+    .withMessage('O número da página precisa ser um número'),
+  check('limit')
+    .optional({
+      nullable: true,
+    })
+    .isNumeric()
+    .withMessage('O número de itens por página precisa ser um número'),
+];
+
+export default { postRules, getRules };
