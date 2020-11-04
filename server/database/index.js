@@ -1,4 +1,5 @@
 import Sequelize from 'sequelize';
+import decamelize from 'decamelize';
 import databaseConfig from '../../config/database';
 import {
   Address,
@@ -15,6 +16,14 @@ class Database {
 
   init() {
     this.connection = new Sequelize(databaseConfig);
+    this.connection.addHook('beforeDefine', attributes => {
+      Object.keys(attributes).forEach(key => {
+        if (typeof attributes[key] !== 'function') {
+          // eslint-disable-next-line no-param-reassign
+          attributes[key].field = decamelize(key);
+        }
+      });
+    });
 
     models
       .map(model => model.init(this.connection))

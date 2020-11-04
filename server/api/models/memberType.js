@@ -11,6 +11,9 @@ class MemberType extends Model {
       updated_at: Sequelize.DATE,
     }, {
       sequelize,
+      createdAt: 'created_at',
+      updatedAt: 'updated_at',
+      underscored: true,
     });
 
     return this;

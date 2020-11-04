@@ -15,7 +15,7 @@ module.exports = {
     },
     street: Sequelize.DataTypes.STRING,
     number: Sequelize.DataTypes.STRING,
-    neigborhood: Sequelize.DataTypes.STRING,
+    neighborhood: Sequelize.DataTypes.STRING,
     city: Sequelize.DataTypes.STRING,
     state: Sequelize.DataTypes.STRING,
     created_at: {
