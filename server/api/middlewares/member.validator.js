@@ -101,4 +101,24 @@ const getRules = () => [
     .withMessage('O número de itens por página precisa ser um número'),
 ];
 
-export default { postRules, getRules, putRules };
+const deleteRules = () => [
+  check('id')
+    .exists()
+    .withMessage('Informe o id do membro que deseja deletar')
+    .custom(memberId => new Promise((resolve, reject) => {
+      MemberService.byId(memberId)
+        .then(member => {
+          if (member) resolve(true);
+          reject(member);
+        })
+        .catch(reject);
+    }))
+    .withMessage('O membro informado não existe'),
+];
+
+export default {
+  postRules,
+  getRules,
+  putRules,
+  deleteRules
+};

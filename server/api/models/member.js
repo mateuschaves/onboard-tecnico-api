@@ -14,6 +14,7 @@ class Member extends Model {
       updated_at: Sequelize.DATE,
     }, {
       sequelize,
+      deletedAt: 'deleted_at',
       createdAt: 'created_at',
       updatedAt: 'updated_at',
       underscored: true,

@@ -26,6 +26,9 @@ module.exports = {
       type: Sequelize.DataTypes.DATE,
       defaultValue: Sequelize.NOW,
     },
+    deleted_at: {
+      type: Sequelize.DataTypes.DATE,
+    },
   }),
 
   down: async queryInterface => queryInterface.dropTable('adresses'),
