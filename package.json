@@ -11,7 +11,8 @@
     "test": "mocha --require @babel/register --exit",
     "test:debug": "mocha --require @babel/register --inspect-brk --exit",
     "lint": "eslint .",
-    "lint:fix": "eslint --fix ."
+    "lint:fix": "eslint --fix .",
+    "sonar:scanner": "sonar-scanner.bat -Dsonar.projectKey=onboard-api -Dsonar.sources=. -Dsonar.host.url=http://localhost:9000 -Dsonar.login=686169b75c92f07f8339c1486345220e843d86a0"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
