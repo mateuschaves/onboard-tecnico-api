@@ -21,6 +21,7 @@ export class AddressController {
         city,
         state,
       )).toJSON();
+      delete address.MemberId;
       return response.status(201).json(address);
     } catch (error) {
       if (error.validation_failed) return response.status(400).json(error);
