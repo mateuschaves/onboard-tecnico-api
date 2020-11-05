@@ -7,6 +7,7 @@ import * as os from 'os';
 import l from './logger';
 import oas from './swagger';
 import '../database';
+import '../api/services/redis.service';
 
 const app = new Express();
 
