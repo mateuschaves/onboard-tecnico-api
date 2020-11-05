@@ -17,6 +17,7 @@ services:
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
       DB_NAME: ${DB_NAME}
+      NODE_ENV: ${NODE_ENV}
     deploy:
       restart_policy:
         condition: on-failure
