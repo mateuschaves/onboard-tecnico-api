@@ -5,10 +5,12 @@ info:
   description: oboard-api
 basePath: /api/v1
 tags:
-  - name: Examples
-    description: Simple example endpoints
   - name: Specification
     description: The swagger API specification
+  - name: Member
+    description: Simple member endpoints
+  - name: Member type
+    description: Tipo de membros
 
 consumes:
   - application/json
@@ -17,56 +19,94 @@ produces:
 
 
 definitions:
-  ExampleBody:
+  MemberBody:
     type: object
-    title: example
+    title: Member
     required:
       - name
+      - email
+      - status
+      - memberTypeId
     properties:
       name:
         type: string
-        example: no_stress
+        example: Mateus Henrique
+      phone:
+        type: string
+        example: (81) 973248345
+      email:
+        type: string
+        example: mateus.morais@maxxidata.com
+      status:
+        type: string
+        example: pending
+      memberTypeId:
+        type: number
+        example: 1
+  AddressBody:
+     type: object
+     title: Address
+     required:
+      - street
+      - number
+      - neighborhood
+      - city
+      - state
+     properties:
+      street:
+        type: string
+        example: Rua Ayres da Cunha
+      number:
+        type: string
+        example: 96
+      neighborhood:
+        type: string
+        example: Mauricio de Nassau
+      city:
+        type: string
+        example: Caruaru
+      state:
+        type: string
+        example: Pernambuco
+  UpdateMemberPath:
+    type: string
+    title:  id
+    example: 1
+  UpdateMemberBody:
+    type: object
+    title: Member
+    required:
+      - name
+      - status
+      - memberTypeId
+    properties:
+      name:
+        type: string
+        example: Mateus Henrique
+      phone:
+        type: string
+        example: (81) 973248345
+      memberTypeId:
+        type: number
+        example: 1
+      status:
+        type: string
+        example: pending
+  MemberTypeBody:
+    type: object
+    title: Member type
+    required:
+      - description
+      - status
+    properties:
+      description:
+        type: string
+        example: Administradores
+      status:
+        type: string
+        example: pending
 
 paths:
-  /examples:
-    get:
-      tags:
-        - Examples
-      description: Fetch all examples
-      responses:
-        200:
-          description: Returns all examples
-    post:
-      tags:
-        - Examples
-      description: Create a new example
-      parameters:
-        - name: example
-          in: body
-          description: an example
-          required: true
-          schema: 
-            $ref: "#/definitions/ExampleBody"
-      responses:
-        200:
-          description: Returns all examples
-
-  /examples/{id}:
-    get:
-      tags:
-        - Examples
-      parameters:
-        - name: id
-          in: path
-          required: true
-          description: The id of the example to retrieve
-          type: integer
-      responses:
-        200:
-          description: Return the example with the specified id
-        404:
-          description: Example not found
-
   /spec:
     get:
       tags:
@@ -74,3 +114,175 @@ paths:
       responses:
         200:
           description: Return the API specification
+
+
+  /member:
+    get:
+      tags:
+        - Member
+      description: Lista todos os membros
+      parameters:
+        - in: query
+          name: page
+          description: Número da página que deseja acessar
+          required: false
+          default: 1
+          type: number
+        - in: query
+          name: limit 
+          description: Número de itens por página
+          default: 20 
+          type: number
+      responses:
+        200:
+          description: Lista todos os membros
+    post:
+      tags:
+        - Member
+      description: Cria um novo membro
+      parameters:
+        - name: Membro
+          in: body
+          description: Membro que deseja adicionar
+          schema: 
+            $ref: "#/definitions/MemberBody"
+      responses:
+        201:
+          description: Retorna o objeto do membro criado
+        400:
+          description: Objeto de membro inválido
+  /member/{id}:
+    put:
+      tags:
+        - Member
+      description: Atualiza um membro já existente
+      parameters:
+        - name: Membro
+          in: body
+          description: Membro que deseja atualizar
+          schema:
+            $ref: '#/definitions/UpdateMemberBody'
+        - name: id
+          in: path
+          description: ID do membro que deseja atualizar
+          type: integer
+          required: true
+            
+      responses:
+        200:
+          description: Retorna o objeto do membro atualizado
+        400:
+          description: Objeto de membro inválido
+    delete:
+      tags: 
+        - Member
+      description: Delete um membro já existente
+      parameters:
+          - name: id
+            in: path
+            description: ID do membro que deseja deletar
+            type: integer
+            required: true
+      responses:
+        204:
+          description: Retorna uma resposta sem conteúdo
+        400:
+          description: Id do membro inválido
+          
+  /member/{id}/address:
+    post:
+      tags:
+        - Address
+      description: Cria um novo endereço para um usuário já existente
+      parameters:
+        - name: Endereço
+          in: body
+          description: Endereço que deseja adicionar ao usuário
+          schema:
+            $ref: '#/definitions/AddressBody'
+        - name: id
+          in: path
+          description: ID do membro que deseja adicionar um novo endereço
+          type: integer
+          required: true
+      responses:
+        201:
+            description: Retorna o objeto do endereço criado
+        400:
+            description: Objeto de endereço inválido
+  /member-type:
+    get:
+      tags:
+        - MemberType
+      description: Lista todos os tipos de membros
+      parameters:
+        - in: query
+          name: page
+          description: Número da página que deseja acessar
+          required: false
+          default: 1
+          type: number
+        - in: query
+          name: limit 
+          description: Número de itens por página
+          default: 20 
+          type: number
+      responses:
+        200:
+          description: Lista todos os tipos de membros
+    post: 
+      tags: 
+        - MemberType
+      description: Cria um novo tipo de membro
+      parameters:
+        - name: Tipo de membro
+          in: body
+          description: Tipo de membro que deseja adicionar
+          schema:
+            $ref: '#/definitions/MemberTypeBody'
+      responses:
+        201:
+          description: Retorna o objeto de tipo de membro criado
+        400:
+          description: Objeto de tipo de membro inválido
+
+  /member-type/{id}:
+    put:
+      tags:
+        - MemberType
+      description: Atualiza um tipo de membro já existente
+      parameters:
+        - name: Tipo de membro
+          in: body
+          description: Tipo de membro que deseja atualizar
+          schema:
+            $ref: '#/definitions/MemberTypeBody'
+        - name: id
+          in: path
+          description: ID do tipo de membro que deseja atualizar
+          type: integer
+          required: true
+      responses:
+        200:
+          description: Retorna o objeto de tipo de membro atualizado
+        400:
+          description: Objeto de tipo de membro inválido
+    delete:
+      tags:
+        - MemberType
+      description: Deleta um tipo de membro já existente
+      parameters:
+        - name: id
+          in: path
+          description: ID de tipo de membro que deseja deletar
+          type: integer
+          required: true
+      responses:
+        204:
+          description: Rertorna uma resposta sem conteúdo
+        400:
+          description: ID do de tipo de membro inválido
+
+
+
+  
